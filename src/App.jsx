@@ -41,6 +41,17 @@ async function addUser() {
     }
 }
 
+async function deleteUser(id) {
+  try {
+    const response = await axios.delete(`http://localhost:3000/clientes?id=${id}`);
+    console.log(response)
+    if (response.status === 200) alert("usuário cadastro com sucesso!");
+      getClientes();
+  } catch (error) {
+    new Error(error)
+  }
+}
+
 return (
   <div>
     <h3> Teste de GET e POST ReactJS </h3>
@@ -50,7 +61,7 @@ return (
       clientes.map((cliente) => {
         return (
           <div
-            key={cliente.nome} //ele tem que pesquisar por alguma coisa, o certo é usar o ID, para a máquina não confundir
+            key={cliente.id} //ele tem que pesquisar por alguma coisa, o certo é usar o ID, para a máquina não confundir
             style={{
               display: "flex",
               alignItems: "center",
@@ -62,6 +73,9 @@ return (
             <span> Nome: {cliente.nome} </span>
             <span> Senha: {cliente.senha} </span>
             <span>ID cargos: {cliente.cargos_id} </span>
+            <button style={{backgroundColor:'red', color:'white'}}
+            onClick={() => deleteUser(cliente.id)}
+            > Deletar </button>
           </div>
         );
       })
